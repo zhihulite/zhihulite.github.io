@@ -1,0 +1,127 @@
+<html lang="zh">
+
+</html>
+
+<head>
+    <meta charset="utf-8">
+    <link crossorigin="" rel="shortcut icon" type="image/x-icon" href="icon.png">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" property="og:description" content="Hydrogen-一款第三方知乎APP">
+    <meta name="keywords" content="Hydrogen|Hydrogen知乎|氢知乎|Hydrogen官网" />
+
+    <title>Hydrogen下载页</title>
+    <style data-emotion="css" data-s="">
+        :root {
+            --swiper-theme-color: #007aff
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.09) 74%, rgba(0, 156, 238, 0.3));
+        }
+
+        .mytext {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: 22px;
+            text-align: center;
+        }
+
+        .button {
+            color: rgb(255, 255, 255);
+            background: rgb(15, 136, 235);
+            border-radius: 999999px;
+            font-size: 18px;
+            font-weight: 700;
+            width: 240px;
+            height: 42px;
+            border: none;
+            margin-left: -120px;
+            display: flex;
+            -webkit-box-align: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            justify-content: center;
+            z-index: 1;
+            margin: 10px 0;
+            cursor: pointer
+        }
+
+        .button:hover {
+            background-color: #1976D2;
+        }
+    </style>
+</head>
+
+<body>
+    <p class="mytext">Hydrogen 一款第三方知乎APP</p>
+    <button class="button" onclick="downAndroid()">下载App</button>
+    <button class="button" onclick="viewUpdate()">查看更新日志</button>
+    <button class="button" onclick="viewAppurl()">查看App源码</button>
+    <button class="button" onclick="viewWeburl()">查看网页源码</button>
+    <button class="button" onclick="viewWeb()">浏览网页端(Beta)</button>
+
+
+    <script>
+
+        function download(downurl, name) {
+            const a = document.createElement('a');
+            a.setAttribute('href', downurl);
+            a.click();
+        }
+
+        function downAndroid() {
+
+            // 创建 XHR 对象
+            const xhr = new XMLHttpRequest();
+
+            // 设置请求方法和 URL
+            xhr.open('GET', 'https://gitee.com/api/v5/repos/huaji110/huajicloud/contents/zhihu_hydrogen.html?access_token=abd6732c1c009c3912cbfc683e10dc45');
+
+            // 发送请求
+            xhr.send();
+
+            // 请求加载完成,处理响应
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    // 解析响应内容
+                    var downjson = JSON.parse(xhr.responseText)
+                    var downcontent = atob(downjson.content)
+                    var downurl = downcontent.match(/updateurl=(\S*),updateurl/)[1]
+                    download(downurl)
+                }
+            }
+
+            // 请求错误处理
+            xhr.onerror = function () {
+                console.log('Request Error...');
+            }
+        }
+
+        function viewUpdate() {
+            window.location.href = "https://zhihulite.github.io/update.html"
+        }
+
+        function viewAppurl() {
+            window.location.href = "https://gitee.com/zhihulite/hydrogen"
+        }
+
+        function viewWeburl() {
+            window.location.href = "https://github.com/zhihulite/zhihulite.github.io"
+        }
+
+        function viewWeb() {
+            window.location.href = "https://zhihulite.github.io/zhihu_web"
+        }
+
+    </script>
+
+</body>
+
+</html>
